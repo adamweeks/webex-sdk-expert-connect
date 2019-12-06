@@ -13,7 +13,8 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.1",
-    "parcel-bundler": "^1.12.4"
+    "parcel-bundler": "^1.12.4",
+    "prettier": "1.19.1"
   },
   "dependencies": {
     "@momentum-ui/core": "^19.0.8",

@@ -1,6 +1,10 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 const port = 3000;
+
+const createUser = require('./guest');
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
@@ -13,12 +17,16 @@ app.get('/', (req, res) => res.send('Hello World!'));
  */
 app.post('/guest', (req, res) => {
   // The response should allow the user to open an sdk instance to listen to meetings on the create space.
-  const response = {
-    guestJWT: 'JWT',
-    spaceID: 'space-id',
-  };
 
-  res.json(response);
+  const displayName = 'SDK Workshop';
+  createUser({displayName}).then((guestJWT) => {
+    const response = {
+      guestJWT,
+      spaceID: 'space-id',
+    };
+
+    res.json(response);
+  });
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!!`));

@@ -19,6 +19,8 @@
   "dependencies": {
     "@momentum-ui/core": "^19.0.8",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "uuid": "^3.3.3"
   }
 }

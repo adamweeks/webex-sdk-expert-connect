@@ -7,6 +7,7 @@
 
 const jwt = require('jsonwebtoken');
 const uuid = require('uuid');
+const axios = require('axios');
 
 const {GUEST_ISSUER_ID, GUEST_SHARED_SECRET} = process.env;
 
@@ -37,4 +38,31 @@ function createUser({displayName}) {
   }
 }
 
-module.exports = createUser;
+async function getWebexGuest(jwtToken) {
+  const guestLoginOptions = {
+    headers: {
+      authorization: `Bearer ${jwtToken}`,
+    },
+    method: 'POST',
+    url: 'https://api.ciscospark.com/v1/jwt/login',
+  };
+
+  try {
+    const response = await axios(guestLoginOptions);
+    const guestAccessToken = response.data.token;
+    const getMeOptions = {
+      headers: {
+        authorization: `Bearer ${guestAccessToken}`,
+      },
+      method: 'GET',
+      url: 'https://api.ciscospark.com/v1/people/me',
+    };
+    const guestUser = await axios(getMeOptions);
+
+    return guestUser.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+module.exports = {createUser, getWebexGuest};

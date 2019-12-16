@@ -38,6 +38,12 @@ function createUser({displayName}) {
   }
 }
 
+/**
+ * Gets the user details of a guest user via token.
+ *
+ * @param {string} jwtToken
+ * @returns {object} User Object from the /people/me endpoint
+ */
 async function getWebexGuest(jwtToken) {
   const guestLoginOptions = {
     headers: {

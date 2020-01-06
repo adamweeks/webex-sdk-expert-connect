@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const {prepareSpace} = require('./webex');
-const createUser = require('./guest');
+const {createUser, getWebexGuest} = require('./guest');
 
 const app = express();
 const port = 3000;
@@ -25,10 +25,12 @@ app.post('/guest', async (req, res) => {
     const spaceTitle = 'SDK Expert Connect Workshop';
     const message = 'A user has requested expert support with the following details:';
     const guestJWT = await createUser({displayName});
-    const space = await prepareSpace({title: spaceTitle, email: expertEmail, message});
+    const guestUser = await getWebexGuest(guestJWT);
+    const space = await prepareSpace({title: spaceTitle, email: expertEmail, guest: guestUser.id, message});
 
     const response = {
       guestJWT,
+      guestUser,
       space,
     };
 

@@ -1,9 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
-const {prepareSpace} = require('./webex');
 const {createUser} = require('./jwt');
-const {loginWebexGuest} = require('./login');
 
 const app = express();
 const port = 3000;
@@ -30,15 +28,8 @@ app.post('/guest', async (req, res) => {
   // The response should allow the user to open an sdk instance to listen to meetings on the create space.
   try {
     const displayName = req.body.name || 'SDK Workshop Guest';
-    const spaceTitle = 'SDK Expert Connect Workshop';
-    const message = `A user has requested expert support with the following details:
 
-Pet: ${req.body.pet}
-
-Details: ${req.body.details}
-    `;
-
-    const guestJWT = 'Fix me in step 1';
+    const guestJWT = await createUser({displayName});
 
     const guestUser = 'Fix me in step 2';
 

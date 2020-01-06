@@ -1,8 +1,8 @@
 require('dotenv').config();
 
 const express = require('express');
-const {prepareSpace} = require('./webex');
 const {createUser} = require('./jwt');
+const {prepareSpace} = require('./webex');
 const {loginWebexGuest} = require('./login');
 
 const app = express();
@@ -37,10 +37,9 @@ Pet: ${req.body.pet}
 
 Details: ${req.body.details}
     `;
+    const guestJWT = await createUser({displayName});
 
-    const guestJWT = 'Fix me in step 1';
-
-    const guestUser = 'Fix me in step 2';
+    const guestUser = await loginWebexGuest(guestJWT);
 
     const space = 'Fix me in step 3';
 

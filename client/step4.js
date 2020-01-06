@@ -17,7 +17,7 @@ function main() {
 
   document.getElementById('name').innerHTML = params.name;
 
-  // TODO: Create space and connect to expert
+  createExpertSpace(params);
 }
 
 main();

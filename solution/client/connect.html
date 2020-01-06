@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../node_modules/@momentum-ui/core/css/momentum-ui.css" />
+  </head>
+  <body style="background-color: lightgray;">
+    <header class="md-top-bar md-top-bar--dark" role="navigation">
+      <div class="md-top-bar__container row">
+        <div class="md-top-bar__brand">
+          <a class="md-brand" href="/">
+            <div class="md-brand__logo">
+              <i class="icon icon-cisco-logo"></i>
+            </div>
+            <div class="md-brand__title">Webex JS SDK Workshop</div>
+          </a>
+        </div>
+        <nav class="md-top-bar__nav "></nav>
+        <div class="md-top-bar__right "></div>
+      </div>
+    </header>
+
+    <main style="height: 100%; background-color: lightgray;">
+      <style>
+        .dialog {
+          width: 75%;
+          background-color: #f5f5f5;
+          margin: 50px auto;
+          padding: 25px;
+          border: 3px solid black;
+          box-shadow: 10px 10px gray;
+        }
+      </style>
+
+      <div class="dialog">
+        <!-- Content Here -->
+        <h1>Welcome, <span id="name"></span> we are connecting you to an expert.</h1>
+        <!-- End Content -->
+      </div>
+
+      <div class="dialog">
+        <!-- Content Here -->
+        <h1>Pet Expert Connect</h1>
+        <div id="status"></div>
+        <div style="display: flex; flex-direction: column;">
+          <h3>Expert:</h3>
+          <div style="width:50%">
+            <audio id="remote-view-audio" autoplay playsinline></audio>
+            <video style="width:100%" id="remote-view-video" autoplay playsinline></video>
+          </div>
+          <h3>Self View:</h3>
+          <video style="width:50%" id="self-view" muted autoplay playsinline></video>
+        </div>
+        <button id="hangup" title="hangup" type="button" disabled>hangup</button>
+        <!-- End Content -->
+      </div>
+    </main>
+
+    <script src="./connect.js"></script>
+  </body>
+</html>

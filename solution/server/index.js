@@ -1,8 +1,9 @@
 require('dotenv').config();
 
 const express = require('express');
+const {createUser} = require('./jwt');
 const {prepareSpace} = require('./webex');
-const {createUser, getWebexGuest} = require('./guest');
+const {loginWebexGuest} = require('./login');
 
 const app = express();
 const port = 3000;
@@ -37,7 +38,7 @@ Pet: ${req.body.pet}
 Details: ${req.body.details}
     `;
     const guestJWT = await createUser({displayName});
-    const guestUser = await getWebexGuest(guestJWT);
+    const guestUser = await loginWebexGuest(guestJWT);
     const space = await prepareSpace({title: spaceTitle, email: expertEmail, guest: guestUser.id, message});
 
     const response = {

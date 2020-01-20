@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Webex SDK Expert Connect Workshop",
   "main": "./server/index.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "dev:client": "parcel client/index.html client/connect.html",
     "dev:server": "nodemon --watch ./server --exec node ./server/index.js",

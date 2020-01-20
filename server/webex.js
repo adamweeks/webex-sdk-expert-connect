@@ -1,7 +1,7 @@
 const webex = require('webex/env');
 
 if (!process.env.WEBEX_ACCESS_TOKEN) {
-  throw new Error('Environment variable WEBEX_TOKEN must be defined');
+  console.error('Environment variable WEBEX_TOKEN must be defined');
 }
 
 /**

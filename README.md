@@ -15,6 +15,12 @@ In this workshop, you will be creating a front-end and back-end solution that ut
 git clone https://github.com/adamweeks/webex-sdk-expert-connect.git
 ```
 
+- Change into the repository directory:
+
+```bash
+cd webex-sdk-expert-connect
+```
+
 - Install package dependencies:
 
 ```bash
@@ -45,34 +51,52 @@ To be able to create these Guest Users, you will need to create a "Guest Issuer"
   - Choose a name, example: "Webex Teams SDK Workshop"
   - Note: Free users cannot create guest issuers (request a demo account from your instructor)
 
+Let's update the project "secrets" file.
+This file contains secrets to your application and should not be saved in the repo.
+(Our `.gitignore` file makes it so that this file will not be saved to our git project.)
+
 - In the project files, copy the `.env.default` file and save it as `.env`
 
-  - (This file contains secrets to your application and should not be published)
   - Copy the values from the Guest Issuer screen in the developer portal and save them in the `.env` file.
   - Your `.env` file should now have values for `GUEST_ISSUER_ID` and `GUEST_SHARED_SECRET`.
 
 - Return to Postman and send a POST request to <http://localhost:3000/guest>
   - This should return a JSON object with values that we will fix.
+
+You've been provided with a `createUser` function that takes the guest issuer and secret and outputs a JWT.
+
+- Review the [`server/jwt.js` file](./server/jwt.js).
+  - This file generates a JWT utilizing your guest issuer.
+
+Let's implement that function in our main file:
+
 - Open the [`server/index.js` file](./server/index.js).
 
-  - Locate the line with `const guestJWT` near the end of the file and replace it with:
+  - Locate the line `const guestJWT = 'Fix me in step 1';` near the end of the file and replace it with:
 
   ```js
   const guestJWT = await createUser({displayName});
   ```
 
-- Review the [`server/jwt.js` file](./server/jwt.js).
-  - This file generates a JWT utilizing your guest issuer.
 - In Postman, send another POST request to <http://localhost:3000/guest> to see if your code changes worked.
 - Copy the guestJWT value that was generated and paste it into <http://jwt.io> to validate.
   - Notice two things in the decoded JWT:
     - The property "name" has the value "SDK Workshop Guest"
     - The property "iss" (short for issuer) has the value that matches your guest issuer
+
+Postman allows you to modify your requests to the node server.
+We are going to be sending JSON to our API, so let's configure Postman to send the data properly:
+
+- Open the Postman application
+- Switch to the "Body" section underneath the request
+- Choose the "raw" radio button to set the body type
+- Change the file type drop down from "Text" to "JSON"
+
+Now our Postman application is ready to send requests.
+Let's send our first data request:
+
 - Let's customize our user name by modifying the request in Postman:
 
-  - Switch to the "Body" section underneath the request
-  - Choose "raw" as the body type
-  - Change the file type to "JSON"
   - Add the body json:
 
   ```json
@@ -86,9 +110,9 @@ To be able to create these Guest Users, you will need to create a "Guest Issuer"
 
 ### Step 2: Create a Webex Guest User
 
-In order to perform actions on a guest user like adding them to a space (which we will be doing in step 3), we need to get the guest user's user ID.
+In order to perform actions on a guest user like adding them to a space (which we will be doing in step 3), we need to get the guest user's user ID from Webex Teams.
 
-We cannot do this with the JWT alone, so we need to actually login the JWT and get the details about the guest user.
+We cannot do this with the JWT alone, so we need to actually login to Webex Teams with the JWT and get the details about the guest user.
 
 - Review the [`server/login.js` file](./server/login.js).
 
@@ -208,6 +232,7 @@ Now that we are familiar with the code base, let's send our web data to the API.
   - Open a web browser to our web server at <http://localhost:1234/index.html>
   - Fill out the form data and click "Connect with an Expert" button.
   - This should take you to `connect.html` and in a few seconds, you should see our expert space created in Webex Teams!
+  - The status on the web page should also read: "Expert Space Created"
 
 ### Step 5: Join a Meeting with our Expert
 
